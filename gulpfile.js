@@ -17,6 +17,18 @@ gulp.task('css', function() {
     .pipe(notify('Main CSS compiled, prefixed, and minified.'));
 });
 
+gulp.task('pizzaCss', function() {
+  return gulp.src([
+      'views/css/style.css',
+      'views/css/bootstrap-grid.css',
+    ])
+    .pipe(concat('pizzas.css'))
+    .pipe(autoprefix('last 10 version', "> 5%"))
+    .pipe(minifycss())
+    .pipe(gulp.dest('views/' + targetDir))
+    .pipe(notify('Pizza CSS compiled, prefixed, and minified.'));
+});
+
 
 gulp.task('js', function() {
   gulp.src([
@@ -32,7 +44,8 @@ gulp.task('js', function() {
 
 gulp.task('watch', function() {
   gulp.watch('css/style.css', ['css']);
+  gulp.watch('views/css/**/*.css', ['pizzaCss']);
   gulp.watch('js/**/*.js', ['js']);
 });
 
-gulp.task('default', ['css', 'js', 'watch']);
+gulp.task('default', ['css', 'pizzaCss', 'js', 'watch']);
