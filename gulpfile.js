@@ -41,11 +41,22 @@ gulp.task('js', function() {
     .pipe(notify('Main JS concatenated and minified.'));
 });
 
+gulp.task('pizzaJs', function() {
+  gulp.src([
+      'views/js/main.js',
+    ])
+    .pipe(concat('main.js'))
+    .pipe(uglify())
+    .pipe(gulp.dest('views/' + targetDir))
+    .pipe(notify('Pizza JS concatenated and minified.'));
+});
+
 
 gulp.task('watch', function() {
   gulp.watch('css/style.css', ['css']);
   gulp.watch('views/css/**/*.css', ['pizzaCss']);
   gulp.watch('js/**/*.js', ['js']);
+  gulp.watch('views/js/**/*.js', ['pizzaJs']);
 });
 
-gulp.task('default', ['css', 'pizzaCss', 'js', 'watch']);
+gulp.task('default', ['css', 'pizzaCss', 'js', 'pizzaJs', 'watch']);
